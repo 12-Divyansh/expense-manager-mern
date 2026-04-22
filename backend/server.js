@@ -15,9 +15,10 @@ app.use(express.json());
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/expenses', require('./routes/expenseRoutes'));
 
-console.log("MONGO_URI is:", process.env.MONGO_URI);
+const mongoUri = process.env.MONGO_URI?.replace(/^"|"$/g, '') || 'mongodb://127.0.0.1:27017/expense-manager';
+console.log("MONGO_URI is:", mongoUri);
 // Connect to MongoDB
-mongoose.connect(process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/expense-manager')
+mongoose.connect(mongoUri)
   .then(() => {
     console.log('Connected to MongoDB');
     app.listen(PORT, () => {
