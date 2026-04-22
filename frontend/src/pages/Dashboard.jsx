@@ -15,7 +15,7 @@ const Dashboard = () => {
   const fetchExpenses = async () => {
     try {
       const token = localStorage.getItem('token');
-      const res = await axios.get('http://localhost:5000/api/expenses', {
+      const res = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/expenses`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setExpenses(res.data);
@@ -47,7 +47,7 @@ const Dashboard = () => {
     e.preventDefault();
     try {
       const token = localStorage.getItem('token');
-      await axios.post('http://localhost:5000/api/expenses', formData, {
+      await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/expenses`, formData, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setFormData({ title: '', amount: '', category: '' });
@@ -60,7 +60,7 @@ const Dashboard = () => {
   const handleDeleteExpense = async (id) => {
     try {
       const token = localStorage.getItem('token');
-      await axios.delete(`http://localhost:5000/api/expenses/${id}`, {
+      await axios.delete(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/expenses/${id}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       fetchExpenses(); // Refresh list
